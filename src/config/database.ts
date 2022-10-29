@@ -12,5 +12,5 @@ const POSTGRES_CLIENT = new Pool({
     user: DB_USER,
     password: DB_PASS,
 })
-
+// POSTGRES_CLIENT.connect()
 exports.POSTGRES_CLIENT = POSTGRES_CLIENT
