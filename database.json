@@ -1,0 +1,16 @@
+{
+    "dev": {
+      "driver": "pg",
+      "host": "0.0.0.0",
+      "database": "tech_apis_db",
+      "user": "root",
+      "password": "root"
+    },
+    "test": {
+      "driver": "pg",
+      "host": "0.0.0.0",
+      "database": "tech_apis_test_db",
+      "user": "root",
+      "password": "root"
+    }
+  }
