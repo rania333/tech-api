@@ -2,12 +2,21 @@
   "name": "storefront_backend",
   "version": "0.1.0",
   "description": "",
-  "main": "server.ts",
+  "main": "server.js",
   "scripts": {
-    "start": "node src/server.ts",
+    "prestart": "set ENV=dev && npm run build",
+    "start": "node --watch dist/server.js",
+    "dev": "nodemon src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "ENV=test db-migrate --env test up && jasmine-ts && db-migrate db:drop test",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "lint": "eslint src/**/*.{ts,json}",
+    "lint:fix": "eslint src/**/*.{ts,json} --fix",
+    "prettier": "prettier --write src/**/*.{ts,json}",
+    "build": "npx tsc",
+    "db:up": "npx db-migrate up",
+    "db:down": "npx db-migrate reset",
+    "pretest": "npm run lint:fix && npm run build"
   },
   "author": "Udacity",
   "license": "ISC",
@@ -27,6 +36,7 @@
     "jasmine": "^3.6.4",
     "jasmine-spec-reporter": "^6.0.0",
     "jasmine-ts": "^0.3.0",
+    "nodemon": "^2.0.20",
     "ts-node": "^9.1.1",
     "tsc-watch": "^4.2.9"
   }

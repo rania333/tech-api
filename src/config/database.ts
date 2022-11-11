@@ -6,7 +6,7 @@ dotenv.config()
 
 const {DB_NAME, DB_USER, DB_PASS, DB_HOST, DB_NAME_TEST, ENV} = process.env
 
-let POSTGRES_CLIENT; 
+let POSTGRES_CLIENT: any; 
 if(ENV == 'dev') {
     POSTGRES_CLIENT = new Pool({
         host: DB_HOST,
@@ -15,7 +15,7 @@ if(ENV == 'dev') {
         password: DB_PASS,
     })
 }
-if(ENV == 'dev') {
+if(ENV == 'test') {
     POSTGRES_CLIENT = new Pool({
         host: DB_HOST,
         database: DB_NAME_TEST,
@@ -25,4 +25,4 @@ if(ENV == 'dev') {
 }
 
 // POSTGRES_CLIENT.connect()
-exports.POSTGRES_CLIENT = POSTGRES_CLIENT
+export default POSTGRES_CLIENT
