@@ -51,7 +51,7 @@ export class Category {
 
     async deleteCategory(categoryId: number): Promise<ICategory> {
         try {
-            const categoryQuery = 'DELETE FROM categories WHERE id =$1'
+            const categoryQuery = 'DELETE FROM categories WHERE id =$1 RETURNING *'
             const {rows} = await  POSTGRES_CLIENT.query(categoryQuery, [categoryId])
             return rows[0]
         } catch(e) {

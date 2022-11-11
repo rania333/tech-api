@@ -135,7 +135,7 @@ var Category = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        categoryQuery = 'DELETE FROM categories WHERE id =$1';
+                        categoryQuery = 'DELETE FROM categories WHERE id =$1 RETURNING *';
                         return [4 /*yield*/, database_1["default"].query(categoryQuery, [categoryId])];
                     case 1:
                         rows = (_a.sent()).rows;
