@@ -91,7 +91,7 @@ var updateProductValidation = function (req, res, next) { return __awaiter(void 
             else if (!categoryId || isNaN(categoryId) || categoryId <= 0) {
                 res.status(400).json({ message: "please enter a valid category id" });
             }
-            else if (imageUrl && isNaN(imageUrl)) {
+            else if (imageUrl && !isNaN(imageUrl)) {
                 res.status(400).json({ message: "please enter a valid image for product" });
             }
             else {
