@@ -8,10 +8,12 @@ var body_parser_1 = __importDefault(require("body-parser"));
 var database_1 = __importDefault(require("./config/database"));
 //routes
 var category_route_1 = require("./routes/category.route");
+var product_route_1 = require("./routes/product.route");
 var app = (0, express_1["default"])();
 var address = "0.0.0.0:3000";
 app.use(body_parser_1["default"].json());
 app.use('/category', category_route_1.categoryRoute);
+app.use('/product', product_route_1.productRoute);
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
