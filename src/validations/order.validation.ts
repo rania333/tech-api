@@ -6,7 +6,7 @@ export const createOrderValidation = async (req: Request | any, res: Response, n
         const {quantity} = req.body
         if (!id || isNaN(+id) || +id <=0 ) {
             res.status(400).json({message: "please enter a valid product id"})
-        } else if (quantity && (quantity <= 0 || isNaN(quantity))) {
+        } else if (quantity && (quantity < 0 || isNaN(quantity))) {
             res.status(400).json({message: "Please enter a valid quantity"})
         } else{
             next()

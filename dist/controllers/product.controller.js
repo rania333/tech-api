@@ -54,7 +54,7 @@ var addProductController = function (req, res) { return __awaiter(void 0, void 0
                 if (!existCategory) {
                     return [2 /*return*/, res.status(404).json({ message: 'There is no category exist with this ID', data: { categoryId: categoryId } })];
                 }
-                return [4 /*yield*/, product.addProduct({ title: title, description: description, price: price, availableQuantity: availableQuantity, categoryId: categoryId, imageUrl: imageUrl })];
+                return [4 /*yield*/, product.addProduct({ title: title, description: description, price: price, availablequantity: availableQuantity, categoryId: categoryId, imageUrl: imageUrl })];
             case 2:
                 data = _b.sent();
                 res.status(201).json({ message: 'New product is added', data: data });
@@ -83,7 +83,7 @@ var updateProductController = function (req, res) { return __awaiter(void 0, voi
                 if (!existCategory) {
                     return [2 /*return*/, res.status(404).json({ message: 'There is no category exist with this ID', data: { categoryId: categoryId } })];
                 }
-                return [4 /*yield*/, product.updateProduct(id, { title: title, description: description, price: price, availableQuantity: availableQuantity, categoryId: categoryId, imageUrl: imageUrl })];
+                return [4 /*yield*/, product.updateProduct(id, { title: title, description: description, price: price, availablequantity: availableQuantity, categoryId: categoryId, imageUrl: imageUrl })];
             case 2:
                 data = _b.sent();
                 if (!data) {

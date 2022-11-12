@@ -46,7 +46,7 @@ var createOrderValidation = function (req, res, next) { return __awaiter(void 0,
             if (!id || isNaN(+id) || +id <= 0) {
                 res.status(400).json({ message: "please enter a valid product id" });
             }
-            else if (quantity && (quantity <= 0 || isNaN(quantity))) {
+            else if (quantity && (quantity < 0 || isNaN(quantity))) {
                 res.status(400).json({ message: "Please enter a valid quantity" });
             }
             else {

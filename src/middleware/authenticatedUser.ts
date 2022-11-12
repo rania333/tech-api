@@ -8,7 +8,7 @@ export const authenticatedUser = async (req: Request | any, res: Response, next:
         const token = authHeader.split(' ')[1]  //Bearer token
         const decodedToken = await decodeToken(token)
 
-        if(!token || !decodedToken) {
+        if(!authHeader || !token || !decodedToken) {
             return res.status(401).json({message: 'unauthorized'})
         }
 
@@ -16,6 +16,7 @@ export const authenticatedUser = async (req: Request | any, res: Response, next:
         next()
 
     } catch (err) {
+        console.log(err)
         res.status(500).json({message: "Something went wrong"})
     }
 }

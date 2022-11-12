@@ -131,7 +131,6 @@ var decodeToken = function (token) { return __awaiter(void 0, void 0, void 0, fu
                 return [4 /*yield*/, jsonwebtoken_1["default"].verify(token, process.env.SECRET_KEY)];
             case 1:
                 decodedToken = _a.sent();
-                console.log('decodedToken', decodedToken);
                 return [2 /*return*/, decodedToken];
             case 2:
                 err_4 = _a.sent();

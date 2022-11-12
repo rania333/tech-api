@@ -54,9 +54,9 @@ var Order = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        orderQuery = 'INSERT INTO orders (status, userid, quantity, prodid) VALUES ($1, $2) RETURNING *';
+                        orderQuery = 'INSERT INTO orders (status, userid, quantity, prodid) VALUES ($1, $2, $3, $4) RETURNING *';
                         return [4 /*yield*/, database_1["default"].query(orderQuery, [IOrder_1.OrderStatus.active,
-                                order.userId, order.quantity, order.prodId])];
+                                order.userid, order.quantity, order.prodid])];
                     case 1:
                         rows = (_a.sent()).rows;
                         return [2 /*return*/, rows];
@@ -97,13 +97,14 @@ var Order = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        orderQuery = 'UPDATE orders SET status = $1 WHERE id = $2 RETURNING *';
-                        return [4 /*yield*/, database_1["default"].query(orderQuery, [IOrder_1.OrderStatus.cancel, orderId])];
+                        orderQuery = 'UPDATE orders SET status = $1 WHERE id = $2 AND status = $3 RETURNING *';
+                        return [4 /*yield*/, database_1["default"].query(orderQuery, [IOrder_1.OrderStatus.cancel, orderId, IOrder_1.OrderStatus.active])];
                     case 1:
                         rows = (_a.sent()).rows;
                         return [2 /*return*/, rows[0]];
                     case 2:
                         e_3 = _a.sent();
+                        console.log('err??', e_3);
                         throw new Error("Could cancel order. Error: ".concat(e_3));
                     case 3: return [2 /*return*/];
                 }

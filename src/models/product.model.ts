@@ -43,7 +43,7 @@ export class Product {
             const categoryQuery = `INSERT INTO products (title, description, price, availablequantity, categoryid, imageurl)
              VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`
             const {rows} = await  POSTGRES_CLIENT.query(categoryQuery, [prod.title, prod.description, prod.price, 
-                prod.availableQuantity, prod.categoryId, prod.imageUrl])
+                prod.availablequantity, prod.categoryId, prod.imageUrl])
             return rows[0]
         } catch(e) {
             throw new Error(`Could not get products. Error: ${e}`)
@@ -55,7 +55,7 @@ export class Product {
             const productsQuery = `UPDATE products SET title = $1, description = $2, price = $3, availablequantity = $4, 
             categoryid = $5, imageurl = $6 WHERE id =$7 RETURNING *`
             const {rows} = await  POSTGRES_CLIENT.query(productsQuery, [prod.title, prod.description, prod.price,
-                prod.availableQuantity, prod.categoryId, prod.imageUrl, prodId])
+                prod.availablequantity, prod.categoryId, prod.imageUrl, prodId])
             return rows[0]
         } catch(e) {
             throw new Error(`Could not update products. Error: ${e}`)

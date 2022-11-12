@@ -1,8 +1,8 @@
 export interface IOrder {
     id?: number,
     status: string, // active | complete | cancel
-    userId?: number,
-    prodId?: number,
+    userid?: number,
+    prodid?: number,
     quantity?: number
 }
 

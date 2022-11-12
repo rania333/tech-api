@@ -21,16 +21,15 @@ export const makeOrderController = async (req: Request | any, res: Response) => 
         }
 
         // check if order quantity available or not
-        if (existProduct.availableQuantity < quantity) {
-            return res.status(409).json({message: 'Sorry there is no available quantity', data: {quantity: existProduct.availableQuantity}})
+        if (existProduct.availablequantity < quantity) {
+            return res.status(409).json({message: 'Sorry there is no available quantity', data: {quantity: existProduct.availablequantity}})
 
         }
-
         // decrease product quantity
-        const data = await product.decreaseProdQnt(+id, existProduct.availableQuantity, quantity);
+        const data = await product.decreaseProdQnt(+id, +existProduct.availablequantity, quantity);
        
         // make order
-        const orderData = order.createOrder({status: OrderStatus.active, userId, prodId: id, quantity})
+        const orderData = await order.createOrder({status: OrderStatus.active, userid: req.userId, prodid: id, quantity})
         res.status(201).json({message: 'Order is created successfully', data: orderData});
     } catch (err) {
         console.error(err)
@@ -41,7 +40,7 @@ export const cancelOrderController = async (req: Request | any, res: Response) =
     try {
         // extract data
         const {orderId} = req.body
- 
+
         // get instances
         const order = new Order()
         const product = new Product('','', 0, 0, 0, '')
@@ -53,18 +52,18 @@ export const cancelOrderController = async (req: Request | any, res: Response) =
         }
  
         // check if order belongs to his owner or not
-        if (cancelledOrder.userId == req.userId) {
+        if (parseInt(cancelledOrder.userid?.toString() ?? '') != parseInt(req.userId)) {
             return res.status(403).json({message: "Sorry you can't prform this process"})
         }
 
         // get product quantity
-        const productData = await product.findOneProduct(+!cancelledOrder.prodId)
-
+        const productData = await product.findOneProduct(parseInt(cancelledOrder.prodid?.toString() ?? ''))
         // increase product quantity
-        const data = await product.increaseProdQnt(+!cancelledOrder.prodId, +!productData.availableQuantity, +!cancelledOrder.quantity);
-        
+        const data = await product.increaseProdQnt(parseInt(cancelledOrder.prodid?.toString() ?? ''), 
+        parseInt(productData.availablequantity?.toString() ?? ''), parseInt(cancelledOrder.quantity?.toString() ?? ''));
         // cancel order
-        const orderData = order.cancelOrder(+orderId)
+        const orderData = await order.cancelOrder(+orderId)
+
          res.status(201).json({message: 'Order is cancelled successfully', data: orderData});
     } catch (err) {
         console.error(err)

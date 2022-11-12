@@ -32,7 +32,6 @@ export const generateToken = async (payload: any): Promise<string | undefined>=>
 export const decodeToken = async (token: string): Promise<JwtPayload | undefined> => {
     try {
         const decodedToken = await jwt.verify(token, process.env.SECRET_KEY as string)
-        console.log('decodedToken', decodedToken)
         return decodedToken as JwtPayload
     } catch (err) {
         console.error(err)

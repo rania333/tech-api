@@ -36,34 +36,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.authenticatedUser = void 0;
-var auth_service_1 = require("../services/auth.service");
+exports.adminUser = void 0;
+var user_model_1 = require("../models/user.model");
 // req of type any to add userid as prop
-var authenticatedUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var authHeader, token, decodedToken, err_1;
+var adminUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, adminUser_1, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                authHeader = req.headers.authorization;
-                token = authHeader.split(' ')[1] //Bearer token
-                ;
-                return [4 /*yield*/, (0, auth_service_1.decodeToken)(token)];
+                user = new user_model_1.User('');
+                return [4 /*yield*/, user.getOneUser(+req.userId)];
             case 1:
-                decodedToken = _a.sent();
-                if (!authHeader || !token || !decodedToken) {
-                    return [2 /*return*/, res.status(401).json({ message: 'unauthorized' })];
+                adminUser_1 = _a.sent();
+                if (adminUser_1.name != 'Admin') {
+                    return [2 /*return*/, res.status(403).json({ message: "You are not the Admin" })];
                 }
-                req.userId = decodedToken.userID;
                 next();
                 return [3 /*break*/, 3];
             case 2:
                 err_1 = _a.sent();
-                console.log(err_1);
                 res.status(500).json({ message: "Something went wrong" });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.authenticatedUser = authenticatedUser;
+exports.adminUser = adminUser;

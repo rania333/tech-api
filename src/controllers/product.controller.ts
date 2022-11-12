@@ -16,7 +16,7 @@ export const addProductController = async (req: Request, res: Response) => {
             return res.status(404).json({message: 'There is no category exist with this ID', data: {categoryId}})
          }
          // add product
-        const data = await product.addProduct ({title, description, price, availableQuantity, categoryId, imageUrl}) 
+        const data = await product.addProduct ({title, description, price, availablequantity: availableQuantity, categoryId, imageUrl}) 
         res.status(201).json({message: 'New product is added', data})
     } catch (err) {
         console.error(err)
@@ -39,7 +39,7 @@ export const updateProductController = async (req: Request, res: Response) => {
          }
  
          // update product
-         const data = await product.updateProduct (id, {title, description, price, availableQuantity, categoryId, imageUrl})
+         const data = await product.updateProduct (id, {title, description, price, availablequantity:availableQuantity, categoryId, imageUrl})
         if(!data) {
             return res.status(404).json({message: 'No product exist with this ID', data: {id}})
         }

@@ -102,7 +102,7 @@ var Product = /** @class */ (function () {
                         _a.trys.push([0, 2, , 3]);
                         categoryQuery = "INSERT INTO products (title, description, price, availablequantity, categoryid, imageurl)\n             VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
                         return [4 /*yield*/, database_1["default"].query(categoryQuery, [prod.title, prod.description, prod.price,
-                                prod.availableQuantity, prod.categoryId, prod.imageUrl])];
+                                prod.availablequantity, prod.categoryId, prod.imageUrl])];
                     case 1:
                         rows = (_a.sent()).rows;
                         return [2 /*return*/, rows[0]];
@@ -123,7 +123,7 @@ var Product = /** @class */ (function () {
                         _a.trys.push([0, 2, , 3]);
                         productsQuery = "UPDATE products SET title = $1, description = $2, price = $3, availablequantity = $4, \n            categoryid = $5, imageurl = $6 WHERE id =$7 RETURNING *";
                         return [4 /*yield*/, database_1["default"].query(productsQuery, [prod.title, prod.description, prod.price,
-                                prod.availableQuantity, prod.categoryId, prod.imageUrl, prodId])];
+                                prod.availablequantity, prod.categoryId, prod.imageUrl, prodId])];
                     case 1:
                         rows = (_a.sent()).rows;
                         return [2 /*return*/, rows[0]];

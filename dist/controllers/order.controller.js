@@ -45,7 +45,7 @@ var makeOrderController = function (req, res) { return __awaiter(void 0, void 0,
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
+                _a.trys.push([0, 4, , 5]);
                 id = req.params.id;
                 quantity = req.body.quantity;
                 userId = req.userId;
@@ -58,59 +58,64 @@ var makeOrderController = function (req, res) { return __awaiter(void 0, void 0,
                     return [2 /*return*/, res.status(404).json({ message: 'There is no product exist with this ID', data: { id: id } })];
                 }
                 // check if order quantity available or not
-                if (existProduct.availableQuantity < quantity) {
-                    return [2 /*return*/, res.status(409).json({ message: 'Sorry there is no available quantity', data: { quantity: existProduct.availableQuantity } })];
+                if (existProduct.availablequantity < quantity) {
+                    return [2 /*return*/, res.status(409).json({ message: 'Sorry there is no available quantity', data: { quantity: existProduct.availablequantity } })];
                 }
-                return [4 /*yield*/, product.decreaseProdQnt(+id, existProduct.availableQuantity, quantity)];
+                return [4 /*yield*/, product.decreaseProdQnt(+id, +existProduct.availablequantity, quantity)];
             case 2:
                 data = _a.sent();
-                orderData = order.createOrder({ status: IOrder_1.OrderStatus.active, userId: userId, prodId: id, quantity: quantity });
-                res.status(201).json({ message: 'Order is created successfully', data: orderData });
-                return [3 /*break*/, 4];
+                return [4 /*yield*/, order.createOrder({ status: IOrder_1.OrderStatus.active, userid: req.userId, prodid: id, quantity: quantity })];
             case 3:
+                orderData = _a.sent();
+                res.status(201).json({ message: 'Order is created successfully', data: orderData });
+                return [3 /*break*/, 5];
+            case 4:
                 err_1 = _a.sent();
                 console.error(err_1);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); };
 exports.makeOrderController = makeOrderController;
 var cancelOrderController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var orderId, order, product, cancelledOrder, productData, data, orderData, err_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    return __generator(this, function (_l) {
+        switch (_l.label) {
             case 0:
-                _a.trys.push([0, 4, , 5]);
+                _l.trys.push([0, 5, , 6]);
                 orderId = req.body.orderId;
                 order = new order_model_1.Order();
                 product = new product_model_1.Product('', '', 0, 0, 0, '');
                 return [4 /*yield*/, order.cancelOrder(+orderId)];
             case 1:
-                cancelledOrder = _a.sent();
+                cancelledOrder = _l.sent();
                 if (!cancelledOrder) {
                     return [2 /*return*/, res.status(404).json({ message: 'There is no order exist with this ID', data: { orderId: orderId } })];
                 }
                 // check if order belongs to his owner or not
-                if (cancelledOrder.userId == req.userId) {
+                if (parseInt((_b = (_a = cancelledOrder.userid) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : '') != parseInt(req.userId)) {
                     return [2 /*return*/, res.status(403).json({ message: "Sorry you can't prform this process" })];
                 }
-                return [4 /*yield*/, product.findOneProduct(+!cancelledOrder.prodId)
+                return [4 /*yield*/, product.findOneProduct(parseInt((_d = (_c = cancelledOrder.prodid) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''))
                     // increase product quantity
                 ];
             case 2:
-                productData = _a.sent();
-                return [4 /*yield*/, product.increaseProdQnt(+!cancelledOrder.prodId, +!productData.availableQuantity, +!cancelledOrder.quantity)];
+                productData = _l.sent();
+                return [4 /*yield*/, product.increaseProdQnt(parseInt((_f = (_e = cancelledOrder.prodid) === null || _e === void 0 ? void 0 : _e.toString()) !== null && _f !== void 0 ? _f : ''), parseInt((_h = (_g = productData.availablequantity) === null || _g === void 0 ? void 0 : _g.toString()) !== null && _h !== void 0 ? _h : ''), parseInt((_k = (_j = cancelledOrder.quantity) === null || _j === void 0 ? void 0 : _j.toString()) !== null && _k !== void 0 ? _k : ''))];
             case 3:
-                data = _a.sent();
-                orderData = order.cancelOrder(+orderId);
-                res.status(201).json({ message: 'Order is cancelled successfully', data: orderData });
-                return [3 /*break*/, 5];
+                data = _l.sent();
+                return [4 /*yield*/, order.cancelOrder(+orderId)];
             case 4:
-                err_2 = _a.sent();
+                orderData = _l.sent();
+                res.status(201).json({ message: 'Order is cancelled successfully', data: orderData });
+                return [3 /*break*/, 6];
+            case 5:
+                err_2 = _l.sent();
                 console.error(err_2);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
