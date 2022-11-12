@@ -15,6 +15,6 @@ exports.productRoute.post('/:id', authenticatedUser_1.authenticatedUser, order_v
 exports.productRoute.put('/order', authenticatedUser_1.authenticatedUser, adminUser_1.adminUser, order_validation_1.updateOrderStatusValidation, order_controller_1.markOrderAsCompletedController);
 exports.productRoute["delete"]('/order', authenticatedUser_1.authenticatedUser, order_validation_1.cancelOrderValidation, order_controller_1.cancelOrderController);
 exports.productRoute.route('/')
-    .get(authenticatedUser_1.authenticatedUser, product_controller_1.getAllProductsController)
-    .put(product_validation_1.updateProductValidation, product_controller_1.updateProductController)
-    .post(product_validation_1.addProductValidation, product_controller_1.addProductController)["delete"](product_validation_1.deleteProductValidation, product_controller_1.deleteProductController);
+    .get(product_controller_1.getAllProductsController)
+    .put(authenticatedUser_1.authenticatedUser, product_validation_1.updateProductValidation, product_controller_1.updateProductController)
+    .post(authenticatedUser_1.authenticatedUser, product_validation_1.addProductValidation, product_controller_1.addProductController)["delete"](authenticatedUser_1.authenticatedUser, product_validation_1.deleteProductValidation, product_controller_1.deleteProductController);

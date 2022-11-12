@@ -15,9 +15,9 @@ productRoute.put('/order', authenticatedUser, adminUser, updateOrderStatusValida
 productRoute.delete('/order', authenticatedUser, cancelOrderValidation, cancelOrderController)
 
 productRoute.route('/')
-.get(authenticatedUser, getAllProductsController)
-.put(updateProductValidation, updateProductController)
-.post(addProductValidation, addProductController)
-.delete(deleteProductValidation, deleteProductController)
+.get(getAllProductsController)
+.put(authenticatedUser, updateProductValidation, updateProductController)
+.post(authenticatedUser, addProductValidation, addProductController)
+.delete(authenticatedUser, deleteProductValidation, deleteProductController)
 
 
