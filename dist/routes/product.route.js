@@ -9,6 +9,7 @@ var order_validation_1 = require("../validations/order.validation");
 var order_controller_1 = require("../controllers/order.controller");
 var adminUser_1 = require("../middleware/adminUser");
 exports.productRoute = (0, express_1.Router)();
+exports.productRoute.get('/order/me', authenticatedUser_1.authenticatedUser, order_controller_1.getCurrentUserOrdersController);
 exports.productRoute.get('/:id', product_validation_1.getOneProductValidation, product_controller_1.getOneProductController);
 // for order
 exports.productRoute.post('/:id', authenticatedUser_1.authenticatedUser, order_validation_1.createOrderValidation, order_controller_1.makeOrderController);

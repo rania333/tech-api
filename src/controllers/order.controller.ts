@@ -81,3 +81,14 @@ export const markOrderAsCompletedController = async (req: Request, res: Response
         console.error(err)
     }
 }
+
+
+export const getCurrentUserOrdersController = async (req: Request | any, res: Response) => {
+    try {
+        const order = new Order()
+        const data = await order.getCurrentOrder(parseInt(req.userId))
+        res.status(200).json({message: 'Your odrers', data, count: data?.length})
+    } catch (err) {
+        console.error(err)
+    }
+}

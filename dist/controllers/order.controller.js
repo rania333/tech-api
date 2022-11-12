@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.markOrderAsCompletedController = exports.cancelOrderController = exports.makeOrderController = void 0;
+exports.getCurrentUserOrdersController = exports.markOrderAsCompletedController = exports.cancelOrderController = exports.makeOrderController = void 0;
 var IOrder_1 = require("../interfaces/IOrder");
 var order_model_1 = require("../models/order.model");
 var product_model_1 = require("../models/product.model");
@@ -143,3 +143,24 @@ var markOrderAsCompletedController = function (req, res) { return __awaiter(void
     });
 }); };
 exports.markOrderAsCompletedController = markOrderAsCompletedController;
+var getCurrentUserOrdersController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var order, data, err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                order = new order_model_1.Order();
+                return [4 /*yield*/, order.getCurrentOrder(parseInt(req.userId))];
+            case 1:
+                data = _a.sent();
+                res.status(200).json({ message: 'Your odrers', data: data, count: data === null || data === void 0 ? void 0 : data.length });
+                return [3 /*break*/, 3];
+            case 2:
+                err_4 = _a.sent();
+                console.error(err_4);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getCurrentUserOrdersController = getCurrentUserOrdersController;

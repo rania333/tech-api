@@ -41,5 +41,16 @@ export class Order {
             throw new Error(`Could cancel order. Error: ${e}`)
         }
     }
+
+    async getCurrentOrder(userId: number): Promise<IOrder[]> {
+        try {
+            const orderQuery = 'SELECT * FROM orders WHERE userid = $1 '
+            const {rows} = await POSTGRES_CLIENT.query(orderQuery, [userId])
+            return rows
+
+        } catch (e) {
+            throw new Error(`Could find ordes. Error: ${e}`)
+        }
+    }
 }
     
