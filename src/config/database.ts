@@ -1,10 +1,10 @@
-import dotenv from 'dotenv'
-import {Pool} from 'pg'
+import dotenv from 'dotenv';
+import {Pool} from 'pg';
 
 
-dotenv.config()
+dotenv.config();
 
-const {DB_NAME, DB_USER, DB_PASS, DB_HOST, DB_NAME_TEST, ENV} = process.env
+const {DB_NAME, DB_USER, DB_PASS, DB_HOST, DB_NAME_TEST, ENV} = process.env;
 
 let POSTGRES_CLIENT: any; 
 if(ENV == 'dev') {
@@ -13,7 +13,7 @@ if(ENV == 'dev') {
         database: DB_NAME,
         user: DB_USER,
         password: DB_PASS,
-    })
+    });
 }
 if(ENV == 'test') {
     POSTGRES_CLIENT = new Pool({
@@ -21,8 +21,8 @@ if(ENV == 'test') {
         database: DB_NAME_TEST,
         user: DB_USER,
         password: DB_PASS,
-    })
+    });
 }
 
 // POSTGRES_CLIENT.connect()
-export default POSTGRES_CLIENT
+export default POSTGRES_CLIENT;

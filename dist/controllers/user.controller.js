@@ -1,154 +1,78 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getOneUserController = exports.getAllUsersController = exports.loginController = exports.addUserController = void 0;
+const user_model_1 = require("../models/user.model");
+const auth_service_1 = require("../services/auth.service");
+const addUserController = async (req, res) => {
+    try {
+        // extract data
+        const { name, pass, email, imageUrl } = req.body;
+        // get user instance
+        const user = new user_model_1.User(name, email, pass, imageUrl);
+        // check if user exist or not
+        const existUser = await user.checkIfUserExist(email);
+        if (existUser) {
+            return res.status(409).json({ message: 'This user is already exist, please choose another email' });
+        }
+        // encrypt pass
+        const hashedPass = await (0, auth_service_1.encryptPassword)(pass.toString());
+        // add user to db
+        const data = await user.register({ name, email, password: hashedPass, imageUrl });
+        res.status(201).json({ message: 'New user is registered', data: { id: data.id, name: data.name, email: data.email } });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Something went wrong' });
     }
 };
-exports.__esModule = true;
-exports.getOneUserController = exports.getAllUsersController = exports.loginController = exports.addUserController = void 0;
-var user_model_1 = require("../models/user.model");
-var auth_service_1 = require("../services/auth.service");
-var addUserController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name_1, pass, email, imageUrl, user, existUser, hashedPass, data, err_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _b.trys.push([0, 4, , 5]);
-                _a = req.body, name_1 = _a.name, pass = _a.pass, email = _a.email, imageUrl = _a.imageUrl;
-                user = new user_model_1.User(name_1, email, pass, imageUrl);
-                return [4 /*yield*/, user.checkIfUserExist(email)];
-            case 1:
-                existUser = _b.sent();
-                if (existUser) {
-                    return [2 /*return*/, res.status(409).json({ message: 'This user is already exist, please choose another email' })];
-                }
-                return [4 /*yield*/, (0, auth_service_1.encryptPassword)(pass.toString())
-                    // add user to db
-                ];
-            case 2:
-                hashedPass = _b.sent();
-                return [4 /*yield*/, user.register({ name: name_1, email: email, password: hashedPass, imageUrl: imageUrl })];
-            case 3:
-                data = _b.sent();
-                res.status(201).json({ message: 'New user is registered', data: { id: data.id, name: data.name, email: data.email } });
-                return [3 /*break*/, 5];
-            case 4:
-                err_1 = _b.sent();
-                console.error(err_1);
-                res.status(500).json({ message: "Something went wrong" });
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
-        }
-    });
-}); };
 exports.addUserController = addUserController;
-var loginController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, pass, user, existUser, passIsMateched, token, err_2;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _b.trys.push([0, 4, , 5]);
-                _a = req.body, email = _a.email, pass = _a.pass;
-                user = new user_model_1.User(email, pass);
-                return [4 /*yield*/, user.checkIfUserExist(email)];
-            case 1:
-                existUser = _b.sent();
-                if (!existUser) {
-                    return [2 /*return*/, res.status(404).json({ message: 'User not exist' })];
-                }
-                return [4 /*yield*/, (0, auth_service_1.comparePass)(pass.toString(), existUser.password)];
-            case 2:
-                passIsMateched = _b.sent();
-                if (!passIsMateched) {
-                    return [2 /*return*/, res.status(401).json({ message: 'incorrect password' })];
-                }
-                return [4 /*yield*/, (0, auth_service_1.generateToken)({ userID: existUser.id, name: existUser.name, email: existUser.email })];
-            case 3:
-                token = _b.sent();
-                res.status(200).json({ message: 'You logged in successfully', data: { token: token } });
-                return [3 /*break*/, 5];
-            case 4:
-                err_2 = _b.sent();
-                console.error(err_2);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+const loginController = async (req, res) => {
+    try {
+        // extract data 
+        const { email, pass } = req.body;
+        // create user instance
+        const user = new user_model_1.User(email, pass);
+        // check if user exist or not
+        const existUser = await user.checkIfUserExist(email);
+        if (!existUser) {
+            return res.status(404).json({ message: 'User not exist' });
         }
-    });
-}); };
+        // check passwords
+        const passIsMateched = await (0, auth_service_1.comparePass)(pass.toString(), existUser.password);
+        if (!passIsMateched) {
+            return res.status(401).json({ message: 'incorrect password' });
+        }
+        // generateToken
+        const token = await (0, auth_service_1.generateToken)({ userID: existUser.id, name: existUser.name, email: existUser.email });
+        res.status(200).json({ message: 'You logged in successfully', data: { token } });
+    }
+    catch (err) {
+        console.error(err);
+    }
+};
 exports.loginController = loginController;
-var getAllUsersController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, data, err_3;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                user = new user_model_1.User('', '');
-                return [4 /*yield*/, user.getAllUsers()];
-            case 1:
-                data = _a.sent();
-                res.status(200).json({ message: 'All users are retrieved', data: data, count: data.length });
-                return [3 /*break*/, 3];
-            case 2:
-                err_3 = _a.sent();
-                console.error(err_3);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
+const getAllUsersController = async (req, res) => {
+    try {
+        const user = new user_model_1.User('', '');
+        const data = await user.getAllUsers();
+        res.status(200).json({ message: 'All users are retrieved', data, count: data.length });
+    }
+    catch (err) {
+        console.error(err);
+    }
+};
 exports.getAllUsersController = getAllUsersController;
-var getOneUserController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, data, err_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                user = new user_model_1.User('', '');
-                return [4 /*yield*/, user.getOneUser(+req.params.id)];
-            case 1:
-                data = _a.sent();
-                if (!data) {
-                    return [2 /*return*/, res.status(404).json({ message: 'User not exist', data: { id: req.body.id } })];
-                }
-                res.status(200).json({ message: 'The users is retrieved', data: data });
-                return [3 /*break*/, 3];
-            case 2:
-                err_4 = _a.sent();
-                console.error(err_4);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+const getOneUserController = async (req, res) => {
+    try {
+        const user = new user_model_1.User('', '');
+        const data = await user.getOneUser(+req.params.id);
+        if (!data) {
+            return res.status(404).json({ message: 'User not exist', data: { id: req.body.id } });
         }
-    });
-}); };
+        res.status(200).json({ message: 'The users is retrieved', data });
+    }
+    catch (err) {
+        console.error(err);
+    }
+};
 exports.getOneUserController = getOneUserController;
