@@ -50,6 +50,16 @@ note: there is a postman document with all endpoints requests you can import it 
 - categoryid
 - imageurl
 
+CREATE TABLE products (
+id SERIAL PRIMARY KEY,
+title VARCHAR(50) NOT NULL,
+description VARCHAR(255) NOT NULL,
+price VARCHAR(50) NOT NULL,
+availableQuantity FLOAT NOT NULL,
+categoryId bigint REFERENCES categories (id),
+imageUrl VARCHAR(255) NOT NULL
+);
+
 #### User
 
 - id
@@ -59,6 +69,14 @@ note: there is a postman document with all endpoints requests you can import it 
 - imageurl
 - token
 
+CREATE TABLE users (
+id SERIAL PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+email VARCHAR(255) NOT NULL,
+password VARCHAR(255) NOT NULL,
+imageUrl VARCHAR(255) NOT NULL
+);
+
 #### Orders
 
 - id
@@ -67,8 +85,22 @@ note: there is a postman document with all endpoints requests you can import it 
 - userid
 - prodid
 
+CREATE TABLE orders (
+id SERIAL PRIMARY KEY,
+status VARCHAR(50) DEFAULT 'active',
+quantity INTEGER DEFAULT 1,
+prodId bigint REFERENCES products (id),
+userId bigint REFERENCES users (id)
+);
+
 ### categories
 
 - id
 - title
 - description
+
+CREATE TABLE categories (
+id SERIAL PRIMARY KEY,
+title VARCHAR(50) NOT NULL,
+description VARCHAR(255)
+);
