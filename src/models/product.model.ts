@@ -88,6 +88,7 @@ export class Product {
     // for order when cancel
     async increaseProdQnt(prodId: number, prodQnt: number, orderQnt: number): Promise<IProduct> {
         try {
+            console.log('increaseProdQnt:::', prodId, prodQnt, orderQnt);
             const newQnt = prodQnt + orderQnt;
             const productsQuery = 'UPDATE products SET availablequantity = $1 WHERE id = $2 RETURNING *';
             const {rows} = await POSTGRES_CLIENT.query(productsQuery, [newQnt, prodId]);

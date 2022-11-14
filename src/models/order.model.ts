@@ -50,6 +50,7 @@ export class Order {
         try {
             const orderQuery = 'UPDATE orders SET status = $1 WHERE id = $2 AND status = $3 RETURNING *';
             const {rows} = await POSTGRES_CLIENT.query(orderQuery, [OrderStatus.cancel, orderId, OrderStatus.active]);
+
             return rows[0];
 
         } catch (e) {
@@ -60,7 +61,9 @@ export class Order {
 
     async getCurrentOrder(userId: number): Promise<IOrder[]> {
         try {
-            const orderQuery = 'SELECT o.*, op.* FROM orders o JOIN order_products op ON o.id = op.orderid WHERE userid = $1 ';
+            const orderQuery = `SELECT o.id AS order_id, o.status AS order_status, op.prodid AS productId, op.quantity AS product_quantity
+            FROM orders o JOIN 
+            order_products op ON o.id = op.orderid WHERE userid = $1 `;
             const {rows} = await POSTGRES_CLIENT.query(orderQuery, [userId]);
             return rows;
 

@@ -151,7 +151,7 @@ var Order = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        orderQuery = 'SELECT o.*, op.* FROM orders o JOIN order_products op ON o.id = op.orderid WHERE userid = $1 ';
+                        orderQuery = "SELECT o.id AS order_id, o.status AS order_status, op.prodid AS productId, op.quantity AS product_quantity\n            FROM orders o JOIN \n            order_products op ON o.id = op.orderid WHERE userid = $1 ";
                         return [4 /*yield*/, database_1["default"].query(orderQuery, [userId])];
                     case 1:
                         rows = (_a.sent()).rows;

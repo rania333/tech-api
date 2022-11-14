@@ -1,16 +1,21 @@
 import {Request, Response, NextFunction} from 'express';
+import { IOrderProduct } from '../interfaces/IOrder';
 
 export const createOrderValidation = async (req: Request | any, res: Response, next: NextFunction) => { 
     try {
-        const {id} = req.params;
-        const {quantity} = req.body;
-        if (!id || isNaN(+id) || +id <=0 ) {
-            res.status(400).json({message: 'please enter a valid product id'});
-        } else if (quantity && (quantity < 0 || isNaN(quantity))) {
-            res.status(400).json({message: 'Please enter a valid quantity'});
-        } else{
-            next();
+        const products = req.body.products;
+        if(!Array.isArray(products) || products.length < 1) {
+            return res.status(400).json({message: 'Products value should be array of products like {productId: , productQnt: }'}); 
         }
+        products.forEach((product: IOrderProduct) => {
+            if(!product.productId  || !product.productQnt || 
+                isNaN(product.productQnt) || isNaN(product.productId) ||
+                product.productId <= 0 || product.productQnt <=0) {
+                res.status(400).json({message: 'Invalid data, each productId and productQnt must be a number greater than 0'});
+            }
+        })
+
+         next();
 
     } catch (err) {
         console.log(err);

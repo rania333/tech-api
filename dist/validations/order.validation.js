@@ -38,20 +38,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.cancelOrderValidation = exports.updateOrderStatusValidation = exports.createOrderValidation = void 0;
 var createOrderValidation = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, quantity;
+    var products;
     return __generator(this, function (_a) {
         try {
-            id = req.params.id;
-            quantity = req.body.quantity;
-            if (!id || isNaN(+id) || +id <= 0) {
-                res.status(400).json({ message: 'please enter a valid product id' });
+            products = req.body.products;
+            if (!Array.isArray(products) || products.length < 1) {
+                return [2 /*return*/, res.status(400).json({ message: 'Products value should be array of products like {productId: , productQnt: }' })];
             }
-            else if (quantity && (quantity < 0 || isNaN(quantity))) {
-                res.status(400).json({ message: 'Please enter a valid quantity' });
-            }
-            else {
-                next();
-            }
+            products.forEach(function (product) {
+                if (!product.productId || !product.productQnt ||
+                    isNaN(product.productQnt) || isNaN(product.productId) ||
+                    product.productId <= 0 || product.productQnt <= 0) {
+                    res.status(400).json({ message: 'Invalid data, each productId and productQnt must be a number greater than 0' });
+                }
+            });
+            next();
         }
         catch (err) {
             console.log(err);

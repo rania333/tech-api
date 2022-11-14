@@ -1,36 +1,46 @@
 import {Request, Response} from 'express';
-import { OrderStatus } from '../interfaces/IOrder';
+import { IOrderProduct, OrderStatus } from '../interfaces/IOrder';
 import { Order } from '../models/order.model';
 import {Product} from '../models/product.model';
 
 export const makeOrderController = async (req: Request | any, res: Response) => {
     try {
         // extract data
-        const {id} = req.params;
-        const {quantity} = req.body;
+        const {products} = req.body;
         const {userId} = req;
+        let cancelOrder: boolean = false;
 
         // get instances
         const order = new Order();
         const product = new Product('','', 0, 0, 0, '');
 
-        // check if product exist or not
-        const existProduct = await product.findOneProduct(id);
-        if(!existProduct) {
-            return res.status(404).json({message: 'There is no product exist with this ID', data: {id}});
-        }
+        // check if each product exist or not
+        await Promise.all(products?.map(async (prod: IOrderProduct, index: number, arr: any[]) => {
+            const existProduct = await product.findOneProduct(prod.productId);
+            if(!existProduct) {
+                cancelOrder = true;
+                arr.length = index + 1
+                return res.status(404).json({message: 'There is no product exist with this ID', data: {productId: prod.productId}});
+            }
 
-        // check if order quantity available or not
-        if (existProduct.availablequantity < quantity) {
-            return res.status(409).json({message: 'Sorry there is no available quantity', data: {quantity: existProduct.availablequantity}});
+            // check if order quantity available or not
+            if (existProduct.availablequantity < prod.productQnt) {
+                cancelOrder = true
+                arr.length = index + 1
+                console.log('testo', cancelOrder)
+                return res.status(409).json({message: 'Sorry there is no available quantity', 
+                data: {availableQuantity: existProduct.availablequantity, productId: prod.productId}});
+            }
+            // decrease product quantity
+            const data = await product.decreaseProdQnt(+prod.productId, +existProduct.availablequantity, prod.productQnt);
+        }))
 
+        if(!cancelOrder) {
+            // make order
+            const orderData = await order.createOrder({status: OrderStatus.active, userid: req.userId, prodid: products});
+            res.status(201).json({message: 'Order is created successfully', data: orderData});
         }
-        // decrease product quantity
-        const data = await product.decreaseProdQnt(+id, +existProduct.availablequantity, quantity);
-       
-        // make order
-        const orderData = await order.createOrder({status: OrderStatus.active, userid: req.userId, prodid: id, quantity});
-        res.status(201).json({message: 'Order is created successfully', data: orderData});
+        
     } catch (err) {
         console.error(err);
     }
@@ -55,9 +65,11 @@ export const cancelOrderController = async (req: Request | any, res: Response) =
         if (parseInt(cancelledOrder.userid?.toString() ?? '') != parseInt(req.userId)) {
             return res.status(403).json({message: 'Sorry you can\'t prform this process'});
         }
+        console.log('test', cancelledOrder)
 
         // get product quantity
         const productData = await product.findOneProduct(parseInt(cancelledOrder.prodid?.toString() ?? ''));
+        console.log('prodDATA:::', productData);
         // increase product quantity
         const data = await product.increaseProdQnt(parseInt(cancelledOrder.prodid?.toString() ?? ''), 
             parseInt(productData.availablequantity?.toString() ?? ''), parseInt(cancelledOrder.quantity?.toString() ?? ''));
