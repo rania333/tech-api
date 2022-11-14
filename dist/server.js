@@ -2,18 +2,18 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.app = void 0;
-const express_1 = __importDefault(require("express"));
-const body_parser_1 = __importDefault(require("body-parser"));
-const database_1 = __importDefault(require("./config/database"));
+var express_1 = __importDefault(require("express"));
+var body_parser_1 = __importDefault(require("body-parser"));
+var database_1 = __importDefault(require("./config/database"));
 //routes
-const category_route_1 = require("./routes/category.route");
-const product_route_1 = require("./routes/product.route");
-const auth_route_1 = require("./routes/auth.route");
-exports.app = (0, express_1.default)();
-const address = '0.0.0.0:3000';
-exports.app.use(body_parser_1.default.json());
+var category_route_1 = require("./routes/category.route");
+var product_route_1 = require("./routes/product.route");
+var auth_route_1 = require("./routes/auth.route");
+exports.app = (0, express_1["default"])();
+var address = '0.0.0.0:3000';
+exports.app.use(body_parser_1["default"].json());
 exports.app.use('/category', category_route_1.categoryRoute);
 exports.app.use('/product', product_route_1.productRoute);
 exports.app.use('/auth', auth_route_1.authRoute);
@@ -24,8 +24,8 @@ exports.app.get('/', function (req, res) {
 //     console.log('DB::', POSTGRES_CLIENT)
 //      console.log(`starting app on: ${address}`)
 // })
-database_1.default.connect().then((db) => {
+database_1["default"].connect().then(function (db) {
     exports.app.listen(3000, function () {
-        console.log(`starting app on: ${address}`);
+        console.log("starting app on: ".concat(address));
     });
 });
