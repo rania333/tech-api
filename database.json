@@ -12,5 +12,6 @@
       "database": "tech_apis_test_db",
       "user": "postgres",
       "password": "root"
-    }
+    },
+    "--sql-file": true
   }

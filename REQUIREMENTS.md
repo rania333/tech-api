@@ -81,15 +81,11 @@ imageUrl VARCHAR(255) NOT NULL
 
 - id
 - status
-- quantity of each product in the order
 - userid
-- prodid
 
 CREATE TABLE orders (
 id SERIAL PRIMARY KEY,
 status VARCHAR(50) DEFAULT 'active',
-quantity INTEGER DEFAULT 1,
-prodId bigint REFERENCES products (id),
 userId bigint REFERENCES users (id)
 );
 
@@ -103,4 +99,17 @@ CREATE TABLE categories (
 id SERIAL PRIMARY KEY,
 title VARCHAR(50) NOT NULL,
 description VARCHAR(255)
+);
+
+### order-products
+
+- orderid
+- prodid
+- quantity
+
+CREATE TABLE order-products (
+id SERIAL PRIMARY KEY,
+quantity INTEGER DEFAULT 1,
+prodId bigint REFERENCES products (id),
+orderId bigint REFERENCES orders (id)
 );
