@@ -37,16 +37,4 @@ export const updateOrderStatusValidation = async (req: Request, res: Response, n
     }
 };
 
-export const cancelOrderValidation = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const {orderId} = req.body;
-        if (!orderId || isNaN(+orderId) || +orderId <=0 ) {
-            res.status(400).json({message: 'please enter a valid order id'});
-        } else{
-            next();
-        }
 
-    } catch (err) {
-        console.log(err);
-    }
-};

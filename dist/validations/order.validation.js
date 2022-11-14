@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.cancelOrderValidation = exports.updateOrderStatusValidation = exports.createOrderValidation = void 0;
+exports.updateOrderStatusValidation = exports.createOrderValidation = void 0;
 var createOrderValidation = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var products;
     return __generator(this, function (_a) {
@@ -80,22 +80,3 @@ var updateOrderStatusValidation = function (req, res, next) { return __awaiter(v
     });
 }); };
 exports.updateOrderStatusValidation = updateOrderStatusValidation;
-var cancelOrderValidation = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var orderId;
-    return __generator(this, function (_a) {
-        try {
-            orderId = req.body.orderId;
-            if (!orderId || isNaN(+orderId) || +orderId <= 0) {
-                res.status(400).json({ message: 'please enter a valid order id' });
-            }
-            else {
-                next();
-            }
-        }
-        catch (err) {
-            console.log(err);
-        }
-        return [2 /*return*/];
-    });
-}); };
-exports.cancelOrderValidation = cancelOrderValidation;

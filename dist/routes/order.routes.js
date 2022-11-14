@@ -11,4 +11,3 @@ exports.orderRoute.get('/me', authenticatedUser_1.authenticatedUser, order_contr
 // for order
 exports.orderRoute.post('/', authenticatedUser_1.authenticatedUser, order_validation_1.createOrderValidation, order_controller_1.makeOrderController);
 exports.orderRoute.put('/', authenticatedUser_1.authenticatedUser, adminUser_1.adminUser, order_validation_1.updateOrderStatusValidation, order_controller_1.markOrderAsCompletedController);
-exports.orderRoute["delete"]('/', authenticatedUser_1.authenticatedUser, order_validation_1.cancelOrderValidation, order_controller_1.cancelOrderController);

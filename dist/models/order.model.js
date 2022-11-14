@@ -122,31 +122,9 @@ var Order = /** @class */ (function () {
             });
         });
     };
-    // order owner only do this
-    Order.prototype.cancelOrder = function (orderId) {
-        return __awaiter(this, void 0, void 0, function () {
-            var orderQuery, rows, e_4;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        orderQuery = 'UPDATE orders SET status = $1 WHERE id = $2 AND status = $3 RETURNING *';
-                        return [4 /*yield*/, database_1["default"].query(orderQuery, [IOrder_1.OrderStatus.cancel, orderId, IOrder_1.OrderStatus.active])];
-                    case 1:
-                        rows = (_a.sent()).rows;
-                        return [2 /*return*/, rows[0]];
-                    case 2:
-                        e_4 = _a.sent();
-                        console.log('err??', e_4);
-                        throw new Error("Could cancel order. Error: ".concat(e_4));
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
     Order.prototype.getCurrentOrder = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var orderQuery, rows, e_5;
+            var orderQuery, rows, e_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -157,8 +135,8 @@ var Order = /** @class */ (function () {
                         rows = (_a.sent()).rows;
                         return [2 /*return*/, rows];
                     case 2:
-                        e_5 = _a.sent();
-                        throw new Error("Could find ordes. Error: ".concat(e_5));
+                        e_4 = _a.sent();
+                        throw new Error("Could find ordes. Error: ".concat(e_4));
                     case 3: return [2 /*return*/];
                 }
             });

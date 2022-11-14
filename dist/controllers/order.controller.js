@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getCurrentUserOrdersController = exports.markOrderAsCompletedController = exports.cancelOrderController = exports.makeOrderController = void 0;
+exports.getCurrentUserOrdersController = exports.markOrderAsCompletedController = exports.makeOrderController = void 0;
 var IOrder_1 = require("../interfaces/IOrder");
 var order_model_1 = require("../models/order.model");
 var product_model_1 = require("../models/product.model");
@@ -98,51 +98,9 @@ var makeOrderController = function (req, res) { return __awaiter(void 0, void 0,
     });
 }); };
 exports.makeOrderController = makeOrderController;
-var cancelOrderController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var orderId, order, product, cancelledOrder, productData, data, orderData, err_2;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-    return __generator(this, function (_l) {
-        switch (_l.label) {
-            case 0:
-                _l.trys.push([0, 5, , 6]);
-                orderId = req.body.orderId;
-                order = new order_model_1.Order();
-                product = new product_model_1.Product('', '', 0, 0, 0, '');
-                return [4 /*yield*/, order.cancelOrder(+orderId)];
-            case 1:
-                cancelledOrder = _l.sent();
-                if (!cancelledOrder) {
-                    return [2 /*return*/, res.status(404).json({ message: 'There is no order exist with this ID', data: { orderId: orderId } })];
-                }
-                // check if order belongs to his owner or not
-                if (parseInt((_b = (_a = cancelledOrder.userid) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : '') != parseInt(req.userId)) {
-                    return [2 /*return*/, res.status(403).json({ message: 'Sorry you can\'t prform this process' })];
-                }
-                console.log('test', cancelledOrder);
-                return [4 /*yield*/, product.findOneProduct(parseInt((_d = (_c = cancelledOrder.prodid) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''))];
-            case 2:
-                productData = _l.sent();
-                console.log('prodDATA:::', productData);
-                return [4 /*yield*/, product.increaseProdQnt(parseInt((_f = (_e = cancelledOrder.prodid) === null || _e === void 0 ? void 0 : _e.toString()) !== null && _f !== void 0 ? _f : ''), parseInt((_h = (_g = productData.availablequantity) === null || _g === void 0 ? void 0 : _g.toString()) !== null && _h !== void 0 ? _h : ''), parseInt((_k = (_j = cancelledOrder.quantity) === null || _j === void 0 ? void 0 : _j.toString()) !== null && _k !== void 0 ? _k : ''))];
-            case 3:
-                data = _l.sent();
-                return [4 /*yield*/, order.cancelOrder(+orderId)];
-            case 4:
-                orderData = _l.sent();
-                res.status(201).json({ message: 'Order is cancelled successfully', data: orderData });
-                return [3 /*break*/, 6];
-            case 5:
-                err_2 = _l.sent();
-                console.error(err_2);
-                return [3 /*break*/, 6];
-            case 6: return [2 /*return*/];
-        }
-    });
-}); };
-exports.cancelOrderController = cancelOrderController;
 // for admin only
 var markOrderAsCompletedController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var orderId, order, data, err_3;
+    var orderId, order, data, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -155,8 +113,8 @@ var markOrderAsCompletedController = function (req, res) { return __awaiter(void
                 res.status(200).json({ message: 'Order is completed', data: data });
                 return [3 /*break*/, 3];
             case 2:
-                err_3 = _a.sent();
-                console.error(err_3);
+                err_2 = _a.sent();
+                console.error(err_2);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -164,7 +122,7 @@ var markOrderAsCompletedController = function (req, res) { return __awaiter(void
 }); };
 exports.markOrderAsCompletedController = markOrderAsCompletedController;
 var getCurrentUserOrdersController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var order, data, err_4;
+    var order, data, err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -176,8 +134,8 @@ var getCurrentUserOrdersController = function (req, res) { return __awaiter(void
                 res.status(200).json({ message: 'Your odrers', data: data, count: data === null || data === void 0 ? void 0 : data.length });
                 return [3 /*break*/, 3];
             case 2:
-                err_4 = _a.sent();
-                console.error(err_4);
+                err_3 = _a.sent();
+                console.error(err_3);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

@@ -26,10 +26,9 @@ note: there is a postman document with all endpoints requests you can import it 
 
 #### order
 
-- [GET] 0.0.0.0:3000/product/order/me => get current user orders / required token
-- [POST] 0.0.0.0:3000/product/id => create a order / required token
-- [PUT] 0.0.0.0:3000/product/order => complete order status / required token and user with name: Admin
-- [DELETE] 0.0.0.0:3000/product/order => cancel order / required token
+- [GET] 0.0.0.0:3000/order/me => get current user orders / required token
+- [POST] 0.0.0.0:3000/order => create a order / required token
+- [PUT] 0.0.0.0:3000/order => complete order status / required token and user with name: Admin
 
 #### Users
 

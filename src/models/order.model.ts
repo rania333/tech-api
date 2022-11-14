@@ -45,19 +45,6 @@ export class Order {
         }
     }
 
-    // order owner only do this
-    async cancelOrder(orderId: number): Promise<IOrder> {
-        try {
-            const orderQuery = 'UPDATE orders SET status = $1 WHERE id = $2 AND status = $3 RETURNING *';
-            const {rows} = await POSTGRES_CLIENT.query(orderQuery, [OrderStatus.cancel, orderId, OrderStatus.active]);
-
-            return rows[0];
-
-        } catch (e) {
-            console.log('err??', e);
-            throw new Error(`Could cancel order. Error: ${e}`);
-        }
-    }
 
     async getCurrentOrder(userId: number): Promise<IOrder[]> {
         try {
