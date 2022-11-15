@@ -26,6 +26,13 @@
         - run npm start to run the project
         - npm run test to test app
 
+## SETUP DATABASE
+
+    - install pgAdmin
+    - in psql login with the default user 'postgres' and password 'root'
+    - create database with name 'tech_apis_db' for development and 'tech_apis_test_db' for testing
+    - run db-migrate up to create all required migrations
+
 ### PORT
 
 - backend: 3000
