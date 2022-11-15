@@ -55,6 +55,7 @@ export const loginController = async (req: Request, res: Response) => {
 
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -66,6 +67,7 @@ export const getAllUsersController = async (req: Request, res: Response) => {
         res.status(200).json({message: 'All users are retrieved', data, count: data.length});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -80,5 +82,6 @@ export const getOneUserController = async (req: Request, res: Response) => {
         res.status(200).json({message: 'The users is retrieved', data});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };

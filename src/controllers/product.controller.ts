@@ -1,6 +1,5 @@
 import {Request, Response} from 'express';
 import { Category } from '../models/category.model';
-import { Order } from '../models/order.model';
 import { Product } from '../models/product.model';
 export const addProductController = async (req: Request, res: Response) => {
     try {
@@ -21,6 +20,7 @@ export const addProductController = async (req: Request, res: Response) => {
         res.status(201).json({message: 'New product is added', data});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -47,6 +47,7 @@ export const updateProductController = async (req: Request, res: Response) => {
         res.status(200).json({message: 'New product is updated', data});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -61,6 +62,7 @@ export const getAllProductsController = async (req: Request, res: Response) => {
         res.status(200).json({message: 'All products are retrieved', data, count: data.length});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -78,6 +80,7 @@ export const getOneProductController = async (req: Request, res: Response) => {
         res.status(200).json({message: 'Target product is retrieved' , data});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -93,6 +96,7 @@ export const deleteProductController = async (req: Request, res: Response) => {
         res.status(200).json({message: 'A product is deleted', data});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -124,5 +128,6 @@ export const addProductToOrderController = async (req: Request | any, res: Respo
         
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };

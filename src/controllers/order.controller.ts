@@ -43,6 +43,7 @@ export const makeOrderController = async (req: Request | any, res: Response) => 
         
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -56,6 +57,7 @@ export const markOrderAsCompletedController = async (req: Request, res: Response
         res.status(200).json({message: 'Order is completed', data});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -67,5 +69,6 @@ export const getCurrentUserOrdersController = async (req: Request | any, res: Re
         res.status(200).json({message: 'Your odrers', data, count: data?.length});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };

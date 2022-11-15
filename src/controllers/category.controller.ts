@@ -8,6 +8,7 @@ export const addCategoryController = async (req: Request, res: Response) => {
         res.status(201).json({message: 'New category is added', data});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -22,6 +23,7 @@ export const updateCategoryController = async (req: Request, res: Response) => {
         res.status(200).json({message: 'New category is updated', data});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -33,6 +35,7 @@ export const getAllCategoriesController = async (req: Request, res: Response) =>
         res.status(200).json({message: 'All categories are retrieved', data, count: data.length});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -47,6 +50,7 @@ export const getOneCategoryController = async (req: Request, res: Response) => {
         res.status(200).json({message: 'Target category is retrieved' , data});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
 
@@ -61,5 +65,6 @@ export const deleteCategoryController = async (req: Request, res: Response) => {
         res.status(200).json({message: 'A category is deleted', data});
     } catch (err) {
         console.error(err);
+        res.status(500).json({message: 'Something went wrong'})
     }
 };
