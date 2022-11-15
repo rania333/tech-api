@@ -8,7 +8,6 @@ export class Order {
 
     async createOrder(order: IOrder): Promise<IOrder> {
         try { 
-            // const orderQuery = 'INSERT INTO orders (status, userid, quantity, prodid) VALUES ($1, $2, $3, $4) RETURNING *';
             const orderQuery = 'INSERT INTO orders (status, userid) VALUES ($1, $2) RETURNING *';
             const {rows} = await POSTGRES_CLIENT.query(orderQuery, [OrderStatus.active, 
                 order.userid]);

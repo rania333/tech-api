@@ -76,3 +76,23 @@ export const getOneProductValidation= async (req: Request, res: Response, next: 
         console.log(err);
     }
 };
+
+
+export const addPrdToOrderValidation = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {id} = req.params;
+        const {orderId, prdQnt} = req.body
+        if(!id || isNaN(+id) || +id<=0) {
+            res.status(400).json({message: 'please enter a valid product id'});
+        } else if (!orderId || isNaN(+orderId) || +orderId<=0) {
+            res.status(400).json({message: 'please enter a valid order id'});
+        } else if (!prdQnt || isNaN(+prdQnt) || +prdQnt<=0) {
+            res.status(400).json({message: 'please enter a valid product quantity'});
+        }  else {
+            next();
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+};

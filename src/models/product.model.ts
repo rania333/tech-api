@@ -1,5 +1,6 @@
 import {  IProduct} from '../interfaces/IProduct';
 import POSTGRES_CLIENT from '../config/database';
+import { IOrder } from '../interfaces/IOrder';
 export class Product {
     title: string;
     description: string;
@@ -82,6 +83,17 @@ export class Product {
 
         } catch(e) {
             throw new Error(`Could not decrease product quantity. Error: ${e}`);
+        }
+    }
+
+    async addProductToOrder(order: IOrder): Promise<IOrder> {
+        try { 
+            const orderQuery = 'INSERT INTO order_products (quantity, prodid, orderid) VALUES ($1, $2, $3) RETURNING *';
+            const {rows} = await POSTGRES_CLIENT.query(orderQuery, [order.quantity, 
+                order.prodid, order.id]);
+            return rows;
+        } catch (e) {
+            throw new Error(`Add product to order. Error: ${e}`);
         }
     }
 

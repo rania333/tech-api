@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import { Category } from '../models/category.model';
+import { Order } from '../models/order.model';
 import { Product } from '../models/product.model';
 export const addProductController = async (req: Request, res: Response) => {
     try {
@@ -90,6 +91,37 @@ export const deleteProductController = async (req: Request, res: Response) => {
             return res.status(404).json({message: 'No product exist with this ID', data: {id}});
         }
         res.status(200).json({message: 'A product is deleted', data});
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+// add product to order
+export const addProductToOrderController = async (req: Request | any, res: Response) => {
+    try {
+        // extract data
+        const {id} = req.params;
+        const {orderId, prdQnt} = req.body
+
+        // get instances
+        const product = new Product('','', 0, 0, 0, '');
+
+        // check if each product exist or not
+        const existProduct = await product.findOneProduct(id);
+        if(!existProduct) {
+            return res.status(404).json({message: 'There is no product exist with this ID', data: {productId:id}});
+        }
+
+        // check if order quantity available or not
+        if (existProduct.availablequantity < prdQnt) {
+            return res.status(409).json({message: 'Sorry there is no available quantity', 
+            data: {availableQuantity: existProduct.availablequantity, productId: id}});
+        }
+            
+
+        const orderData = await product.addProductToOrder({id: orderId, quantity: prdQnt, prodid: id, status: ''});
+        res.status(201).json({message: 'Product is added to order successfully', data: orderData});
+        
     } catch (err) {
         console.error(err);
     }
