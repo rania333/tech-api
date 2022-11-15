@@ -23,6 +23,7 @@ note: there is a postman document with all endpoints requests you can import it 
 - [POST] 0.0.0.0:3000/product => create a product / required token
 - [PUT] 0.0.0.0:3000/product => update a product / required token
 - [DELETE] 0.0.0.0:3000/product => delete product / required token
+- [POST] 0.0.0.0:3000/product/:id/order => add product to order
 
 #### order
 
