@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.deleteProductController = exports.getOneProductController = exports.getAllProductsController = exports.updateProductController = exports.addProductController = void 0;
+exports.addProductToOrderController = exports.deleteProductController = exports.getOneProductController = exports.getAllProductsController = exports.updateProductController = exports.addProductController = void 0;
 var category_model_1 = require("../models/category.model");
 var product_model_1 = require("../models/product.model");
 var addProductController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -62,6 +62,7 @@ var addProductController = function (req, res) { return __awaiter(void 0, void 0
             case 3:
                 err_1 = _b.sent();
                 console.error(err_1);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
@@ -94,6 +95,7 @@ var updateProductController = function (req, res) { return __awaiter(void 0, voi
             case 3:
                 err_2 = _b.sent();
                 console.error(err_2);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
@@ -116,6 +118,7 @@ var getAllProductsController = function (req, res) { return __awaiter(void 0, vo
             case 2:
                 err_3 = _b.sent();
                 console.error(err_3);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -142,6 +145,7 @@ var getOneProductController = function (req, res) { return __awaiter(void 0, voi
             case 2:
                 err_4 = _b.sent();
                 console.error(err_4);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -167,9 +171,46 @@ var deleteProductController = function (req, res) { return __awaiter(void 0, voi
             case 2:
                 err_5 = _b.sent();
                 console.error(err_5);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
 exports.deleteProductController = deleteProductController;
+// add product to order
+var addProductToOrderController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, _a, orderId, prdQnt, product, existProduct, orderData, err_6;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 3, , 4]);
+                id = req.params.id;
+                _a = req.body, orderId = _a.orderId, prdQnt = _a.prdQnt;
+                product = new product_model_1.Product('', '', 0, 0, 0, '');
+                return [4 /*yield*/, product.findOneProduct(id)];
+            case 1:
+                existProduct = _b.sent();
+                if (!existProduct) {
+                    return [2 /*return*/, res.status(404).json({ message: 'There is no product exist with this ID', data: { productId: id } })];
+                }
+                // check if order quantity available or not
+                if (existProduct.availablequantity < prdQnt) {
+                    return [2 /*return*/, res.status(409).json({ message: 'Sorry there is no available quantity',
+                            data: { availableQuantity: existProduct.availablequantity, productId: id } })];
+                }
+                return [4 /*yield*/, product.addProductToOrder({ id: orderId, quantity: prdQnt, prodid: id, status: '' })];
+            case 2:
+                orderData = _b.sent();
+                res.status(201).json({ message: 'Product is added to order successfully', data: orderData });
+                return [3 /*break*/, 4];
+            case 3:
+                err_6 = _b.sent();
+                console.error(err_6);
+                res.status(500).json({ message: 'Something went wrong' });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.addProductToOrderController = addProductToOrderController;

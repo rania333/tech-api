@@ -177,6 +177,27 @@ var Product = /** @class */ (function () {
             });
         });
     };
+    Product.prototype.addProductToOrder = function (order) {
+        return __awaiter(this, void 0, void 0, function () {
+            var orderQuery, rows, e_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        orderQuery = 'INSERT INTO order_products (quantity, prodid, orderid) VALUES ($1, $2, $3) RETURNING *';
+                        return [4 /*yield*/, database_1["default"].query(orderQuery, [order.quantity,
+                                order.prodid, order.id])];
+                    case 1:
+                        rows = (_a.sent()).rows;
+                        return [2 /*return*/, rows];
+                    case 2:
+                        e_7 = _a.sent();
+                        throw new Error("Add product to order. Error: ".concat(e_7));
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return Product;
 }());
 exports.Product = Product;

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getOneProductValidation = exports.deleteProductValidation = exports.updateProductValidation = exports.addProductValidation = void 0;
+exports.addPrdToOrderValidation = exports.getOneProductValidation = exports.deleteProductValidation = exports.updateProductValidation = exports.addProductValidation = void 0;
 var addProductValidation = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, title, description, price, availableQuantity, categoryId, imageUrl;
     return __generator(this, function (_b) {
@@ -143,3 +143,29 @@ var getOneProductValidation = function (req, res, next) { return __awaiter(void 
     });
 }); };
 exports.getOneProductValidation = getOneProductValidation;
+var addPrdToOrderValidation = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, _a, orderId, prdQnt;
+    return __generator(this, function (_b) {
+        try {
+            id = req.params.id;
+            _a = req.body, orderId = _a.orderId, prdQnt = _a.prdQnt;
+            if (!id || isNaN(+id) || +id <= 0) {
+                res.status(400).json({ message: 'please enter a valid product id' });
+            }
+            else if (!orderId || isNaN(+orderId) || +orderId <= 0) {
+                res.status(400).json({ message: 'please enter a valid order id' });
+            }
+            else if (!prdQnt || isNaN(+prdQnt) || +prdQnt <= 0) {
+                res.status(400).json({ message: 'please enter a valid product quantity' });
+            }
+            else {
+                next();
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.addPrdToOrderValidation = addPrdToOrderValidation;

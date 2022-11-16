@@ -54,6 +54,7 @@ var addCategoryController = function (req, res) { return __awaiter(void 0, void 
             case 2:
                 err_1 = _b.sent();
                 console.error(err_1);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -79,6 +80,7 @@ var updateCategoryController = function (req, res) { return __awaiter(void 0, vo
             case 2:
                 err_2 = _b.sent();
                 console.error(err_2);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -101,6 +103,7 @@ var getAllCategoriesController = function (req, res) { return __awaiter(void 0, 
             case 2:
                 err_3 = _b.sent();
                 console.error(err_3);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -126,6 +129,7 @@ var getOneCategoryController = function (req, res) { return __awaiter(void 0, vo
             case 2:
                 err_4 = _a.sent();
                 console.error(err_4);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -151,6 +155,7 @@ var deleteCategoryController = function (req, res) { return __awaiter(void 0, vo
             case 2:
                 err_5 = _a.sent();
                 console.error(err_5);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

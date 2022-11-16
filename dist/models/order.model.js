@@ -61,7 +61,6 @@ var Order = /** @class */ (function () {
                                 order.userid])];
                     case 1:
                         rows_1 = (_b.sent()).rows;
-                        console.log('orrder ID:::', rows_1[0].id);
                         (_a = order.prodid) === null || _a === void 0 ? void 0 : _a.forEach(function (prd) { return __awaiter(_this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
                                 switch (_a.label) {

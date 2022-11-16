@@ -92,6 +92,7 @@ var makeOrderController = function (req, res) { return __awaiter(void 0, void 0,
             case 4:
                 err_1 = _a.sent();
                 console.error(err_1);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
@@ -115,6 +116,7 @@ var markOrderAsCompletedController = function (req, res) { return __awaiter(void
             case 2:
                 err_2 = _a.sent();
                 console.error(err_2);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -136,6 +138,7 @@ var getCurrentUserOrdersController = function (req, res) { return __awaiter(void
             case 2:
                 err_3 = _a.sent();
                 console.error(err_3);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

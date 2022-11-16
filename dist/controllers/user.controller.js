@@ -99,6 +99,7 @@ var loginController = function (req, res) { return __awaiter(void 0, void 0, voi
             case 4:
                 err_2 = _b.sent();
                 console.error(err_2);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
@@ -120,6 +121,7 @@ var getAllUsersController = function (req, res) { return __awaiter(void 0, void 
             case 2:
                 err_3 = _a.sent();
                 console.error(err_3);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -144,6 +146,7 @@ var getOneUserController = function (req, res) { return __awaiter(void 0, void 0
             case 2:
                 err_4 = _a.sent();
                 console.error(err_4);
+                res.status(500).json({ message: 'Something went wrong' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
