@@ -11,7 +11,6 @@ export class Order {
             const orderQuery = 'INSERT INTO orders (status, userid) VALUES ($1, $2) RETURNING *';
             const {rows} = await POSTGRES_CLIENT.query(orderQuery, [OrderStatus.active, 
                 order.userid]);
-                console.log('orrder ID:::', rows[0].id);
                 order.prodid?.forEach(async prd => {
                     await this.insertPrd(prd, rows[0].id)
                 })
