@@ -8,7 +8,7 @@
     "start": "node --watch dist/server.js",
     "dev": "nodemon src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "set ENV=test&& npx db-migrate --env test up && jasmine-ts &&npx db-migrate db:drop test",
+    "test": "set ENV=test&& npx db-migrate --env test up && jasmine-ts &&npx db-migrate db:down test",
     "tsc": "tsc",
     "lint": "eslint src/**/*.{ts,json}",
     "lint:fix": "eslint src/**/*.{ts,json} --fix",
